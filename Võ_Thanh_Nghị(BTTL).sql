@@ -28,6 +28,7 @@ where not exists (
 				from CTHD 
 				where HOADON.sohd=CTHD.sohd and CTHD.masp=SANPHAM.masp) )
 --Bài 3.19
+select sohd,
 --Bài 3.20
 SELECT COUNT(*) AS N'Số hóa đơn không phải do thành viên mua'
 FROM HOADON
@@ -84,3 +85,26 @@ WHERE nuocsx = 'Trung Quoc' and GIA IN (
 	FROM SANPHAM
 	Where nuocsx = 'Trung Quoc'
 	ORDER BY GIA DESC)
+--Bài 3.31
+select *
+from khachhang
+where DOANHSO in (
+	select top 3 DOANHSO
+	FROM KHACHHANG
+	ORDER BY DOANHSO DESC)
+--Bài 3.32
+SELECT COUNT (*) AS N'Tổng SOSP'
+FROM SANPHAM
+WHERE NUOCSX='Trung Quoc'
+--Bài 3.33
+SELECT NUOCSX , COUNT (*) AS SOSP
+FROM SANPHAM
+GROUP BY NUOCSX 
+--Bài 3.34 
+SELECT NUOCSX , MAX(GIA) AS N'Giá cao nhất' , MIN(GIA) AS N'Giá thấp nhất' , AVG(GIA) AS N'Giá Trung Bình'
+FROM SANPHAM
+GROUP BY NUOCSX
+--Bài 3.35
+SELECT NGHD , SUM(TRIGIA) AS DOANHTHU
+FROM HOADON
+GROUP BY NGHD
