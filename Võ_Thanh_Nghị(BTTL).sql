@@ -70,3 +70,17 @@ where gia in (
 	ORDER BY GIA DESC
 	)
 --Bài 3.29
+SELECT MASP ,TENSP
+FROM SANPHAM
+WHERE nuocsx = 'Thai Lan' and GIA IN (
+	SELECT TOP 3 GIA
+	FROM SANPHAM
+	ORDER BY GIA DESC)
+--Bài 3.30
+SELECT MASP ,TENSP
+FROM SANPHAM
+WHERE nuocsx = 'Trung Quoc' and GIA IN (
+	SELECT TOP 3 GIA
+	FROM SANPHAM
+	Where nuocsx = 'Trung Quoc'
+	ORDER BY GIA DESC)
