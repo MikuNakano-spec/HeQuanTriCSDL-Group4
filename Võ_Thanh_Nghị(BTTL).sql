@@ -13,8 +13,9 @@ select masp,tensp
 from SANPHAM
 where NUOCSX='Trung Quoc' and not exists (
 		select MASP
-		FROM CTHD join HOADON on CTHD.SOHD = HOADON.SOHD
-		WHERE SANPHAM.MASP = CTHD.MASP AND YEAR(HOADON.NGHD) = 2006
+		FROM CTHD 
+		inner join HOADON on CTHD.SOHD = HOADON.SOHD
+		WHERE SANPHAM.MASP = CTHD.MASP AND YEAR(HOADON.NGHD) = '2006'
 	)
 --Bài 3.18
 select SOHD
@@ -27,3 +28,45 @@ where not exists (
 				from CTHD 
 				where HOADON.sohd=CTHD.sohd and CTHD.masp=SANPHAM.masp) )
 --Bài 3.19
+--Bài 3.20
+SELECT COUNT(*) AS N'Số hóa đơn không phải do thành viên mua'
+FROM HOADON
+WHERE MAKH IS NULL
+--Bài 3.21
+SELECT COUNT(DISTINCT MASP) as N'Sản phẩm khác nhau được bán ra năm 2003'
+FROM HOADON 
+INNER JOIN CTHD ON HOADON.SOHD = CTHD.SOHD
+WHERE YEAR(NGHD) = '2006'
+--Bài 3.22
+SELECT MIN(TRIGIA) AS N'Hóa đơn Thấp Nhất' , MAX (TRIGIA) AS N'Hóa đơn Cao Nhất'
+FROM HOADON
+--Bài 3.23
+SELECT AVG(TRIGIA) AS N'Trị giá trung bình của tất cả các hóa đơn được bán ra trong năm 2006'
+FROM HOADON
+WHERE YEAR(NGHD) ='2006'
+--Bài 3.24
+SELECT SUM(TRIGIA) AS N'Doanh Thu'
+FROM HOADON
+WHERE YEAR(NGHD) = '2006'
+--Bài 3.25
+SELECT SOHD
+FROM HOADON
+WHERE TRIGIA= (SELECT MAX(TRIGIA) FROM HOADON WHERE YEAR(NGHD) = '2006' )
+--Bài 3.26
+SELECT HOTEN
+FROM KHACHHANG
+inner join HOADON on HOADON.MAKH = KHACHHANG.MAKH
+WHERE TRIGIA = (SELECT MAX(TRIGIA) FROM HOADON WHERE YEAR (NGHD)=2006)
+--Bài 3.27
+select TOP 3 MAKH, HOTEN
+FROM KHACHHANG
+ORDER BY DOANHSO DESC
+--Bài 3.28
+select masp,tensp
+from sanpham
+where gia in (
+	SELECT TOP 3 GIA
+	FROM SANPHAM
+	ORDER BY GIA DESC
+	)
+--Bài 3.29
